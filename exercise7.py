@@ -1,55 +1,70 @@
-# Jackson Beard
+# Jarek Martin
 # COP2002-0M1
-# 04/02/2026
-# Exercise 7 Defining own function
-# The program will generate a random MAC or IPv6 address.
+# 4/4/2026
+# MAC address or IPV6 address generator
+# Generates a random MAC or IPV6 address based upon input
 
-# Import statement for random functions
-from random import randint
 
-def generate_hex_digits(number=6):
-    
-    '''
-    This function takes an integer parameter number and based upon this number 
-    generates that many pairs of hexadecimal digits to return either a MAC address or IPv6 address.  
-    The default for number is 6 because it will generate a properly formatted MAC address.  
-    If number is 16, it will generate a properly formatted IPv6 address.
-    '''
+import random
 
-    # This constant string stores all the values that can be used in a hexadecimal number.
-    HEX = "0123456789ABCDEF" 
 
-    # Empty string to store all pairs of hexadecimal numbers that will be generated.
-    address = ""
+# generates random Hexadecimal digits
+def getHexDigits(length):              
+                                        
+    # variables
+    hexDigits = "0123456789ABCDEF"
+    result = ""
+
+    # for loop to generate hexdigits
+    for count in range(length):
+        result += random.choice(hexDigits)
+
+    return result                       
+
+# 6. Function Definition = generate_hex_digits
+# generates either MAC address or IPv6 address
+def generate_hex_digits(number=6):      # 1. Name = generate_hex_digits
+                                        # 2. Parameter = number
+    address = ""                        # 4. Default Argument = 6
 
     if number == 6:
-        print("Generating random MAC address...") # Generates a random MAC address when number is 6
-        i = 0
-        while i < number:
-           firstHex = HEX[randint(0,15)]
-           secondHex = HEX[randint(0,15)]
-           address += firstHex + secondHex + ":" 
-           i += 1
+
+        # generates MAC address
+        for count in range(6):
+            address += getHexDigits(2)  # 7. Function Call = getHexDigits(2)
+                                        # 3. Argument = 2
+            # places colons
+            if count < 5:
+                address += ":"
+
+        return address                  # 5. Return Value = address
+
     elif number == 16:
-        print("Generating random IPv6 address...") # Generates a random IPv6 address whne number is 16
-        i = 0
-        while i < number / 2:
-           firstHex = HEX[randint(0,15)]
-           secondHex = HEX[randint(0,15)]
-           thirdHex = HEX[randint(0,15)]
-           fourthHex = HEX[randint(0,15)]
-           address += firstHex + secondHex + thirdHex + fourthHex + ":"
-           i += 1
-    else:
-        print("Error. Invalid value.") # Outputs an error message if number is not 6 or 16
-    
-    return address[:-1] + "\n" # Returns the generated address without the last colon and adds a newline character
 
+        # generates IPv6 address
+        for count in range(8):
+            address += getHexDigits(4)  # 7. Function Call = getHexDigits(4)
+                                        # 3. Argument = 4
+            # places colons             
+            if count < 7:
+                address += ":"
 
+        return address                  # 5. Return Value = address
+
+   
 def main():
 
-    print(generate_hex_digits())
+    MACAddress = generate_hex_digits()
+    Ipv6Address = generate_hex_digits(16)
+    
+    print(f"Generating random MAC address...\n{MACAddress}")
 
-if(__name__=="__main__"):
-   main()
-   
+    print()
+
+    print(f"Generation random IPv6 address...\n{Ipv6Address}")
+
+    
+
+
+if (__name__ == "__main__"):
+    main()               
