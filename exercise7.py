@@ -1,48 +1,27 @@
-# Alex Libertowski
-# COP2002-0M1
-# April 01, 2026
-# Exercise 7: Define Own Functions and Use It
-# Practicing the use of functions by generating MAC and IPv6 addresses
+# Zoe Dobelstein
+# COP2002-001
+# 4/2/2026
+# Exercise 7 - Functions
+# program that makes a random mac and ipv6 address using a function
 
-from random import choice
-
+import random
 
 def generate_hex_digits(number=6):
-    hexValues = [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-    ]
-
-    HEX_CHUNKS = 2
-    COLON_INTERVAL = 2
-    if number == 6:
-        COLON_INTERVAL = 2
-    else:
-        COLON_INTERVAL = 4
-
+    hexVals = "0123456789ABCDEF"
     address = ""
     i = 0
-    for i in range(number * HEX_CHUNKS):
-        # Add a colon at every two hex values, except the first index
-        if i != 0 and i % COLON_INTERVAL == 0:
-            address += ":"
 
-        hexValue = choice(hexValues)
-        address += hexValue
+    while i < number * 2:
+        address += random.choice(hexVals)
+
+        # formatting mac vs ipv6
+        if number == 6:
+            if i % 2 == 1 and i != (number * 2 - 1):
+                address += ":"
+        else:
+            if i % 4 == 3 and i != (number * 2 - 1):
+                address += ":"
+
         i += 1
 
     return address
@@ -50,13 +29,13 @@ def generate_hex_digits(number=6):
 
 def main():
     print("Generating random MAC address...")
-    hexAddress = generate_hex_digits()
-    print(hexAddress)
+    print(generate_hex_digits())
 
-    print("\nGenerating random IPv6 address...")
-    hexAddress = generate_hex_digits(16)
-    print(hexAddress)
+    print()
+
+    print("Generating random IPv6 address...")
+    print(generate_hex_digits(16))
 
 
-if __name__ == "__main__":
+if(__name__=="__main__"):
     main()
