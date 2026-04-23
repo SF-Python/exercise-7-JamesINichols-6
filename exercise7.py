@@ -1,60 +1,60 @@
-# Christopher Canty
+# Morgan Palmer
 # COP2002-0M1
-# April 12th, 2026
-# Exercise 7
-# This an exercise on Functions in Python - generating MAC and IPv6 addresses.
-
-
-
+# 4/12/26
+# MAC and IPv6 Address Generator
+# Program generates MAC address and an IPv6 address
 
 import random
 
-# List of valid hex characters
-hex_characters = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"]
+# number = 6 MAC address
+# number = 16 IPv6
+def generate_hex_digits(number = 6):
+    # valid hexadecimal digits
+    hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
 
-def generateMacAddress():
+    result = ""
+    pair_count = 0
 
-    address_mac = ""
-    i = 0
-# Loop continues until 12 hex characters have been generated
-    while i < 12:       
-        hex_pair = random.choice(hex_characters)
-        address_mac += hex_pair
-        i += 1
+    # loop for hex pairs
+    while pair_count < number:
 
-# Generating separation of : between each pair
-        if i % 2 == 0 and i < 12:
-            address_mac += ":"
-
-    return address_mac
+        digit_count = 0
+        hex_pair = ""
 
 
-def generateIPv6():
+        while digit_count < 2:
+            random_index = random.randint(0, len(hex_digits) - 1)
+            hex_pair = hex_pair + hex_digits[random_index]
+            digit_count += 1
 
-    address_ipv6 = ""
-    i = 0
-# Loop continues until 32 hex characters have been generated
-    while i < 32:
-        hex_quartet = random.choice(hex_characters)
-        address_ipv6 += hex_quartet
-        i += 1
-        
-# Generating separation of : between each quartet
-        if i % 4 == 0 and i < 32:
-            address_ipv6 += ":"
-
-    return address_ipv6
+        result = result + hex_pair
 
 
-def main():   
-# Function to call the MAC addresses
-    print("Generating random MAC Address...")
-    print (generateMacAddress())
+        if number == 6:
+            if pair_count < number - 1:
+                result = result + ":"
+
+
+        else:
+            if pair_count % 2 == 1 and pair_count < number - 1:
+                result = result + ":"
+
+        pair_count += 1
+
+    return result
+
+def main():
+
+    # Displays the generated MAC address
+    print("Generating random MAC address...")
+    print(generate_hex_digits())
 
     print()
-# Function to call the IPv6 addresses
-    print("Generating random IPv6 Address...")
-    print (generateIPv6())
+    
+    # Displays the generated IPv6 address
+    print("Generating random IPv6 address...")
+    print(generate_hex_digits(16))
 
-if __name__ == "__main__":
+
+if (__name__ == "__main__"):
     main()
