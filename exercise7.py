@@ -42,10 +42,10 @@ def generate_hex_digits(number=6):  # This line contains the function definition
 
 def main():
     """Generates and returns the desired MAC and IPv6 addresses"""
-    print("Generating MAC address...")   
+    print("Generating random MAC address...")   
     print(generate_hex_digits())
     print()
-    print("Generating IPv6 address...")
+    print("Generating random IPv6 address...")
     print(generate_hex_digits(16)) 
 
 if(__name__=="__main__"):
