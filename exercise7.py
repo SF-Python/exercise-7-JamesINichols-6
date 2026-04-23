@@ -1,48 +1,87 @@
-#Kaleb Parkhurst   
-#COP2002.0M1
-#4/8/2026
-#Exercise 7
-#MAC address generator
-import random
+# Miguel Evangelista
+# COP2002-0M1
+# Apr 12, 2026
+# Exercise5: Loops
+# Program generates random MAC Address
 
-# Generates random hexadecimal digits for MAC and IPv6 addresses
+from random import randint
+
 def generate_hex_digits(number=6):
-    # List of hexadecimal digits
-    hex_digits = "0123456789ABCDEF"
-    
-    # Empty list to hold address parts
-    address_parts = []
-    
-    # address generation based on the number of parts (6 for MAC, 16 for IPv6)
-    if number == 6:
-        for i in range(number):
-            pair = ""
-            for j in range(2):
-                pair += random.choice(hex_digits)
-            address_parts.append(pair)
-    
-    # address generation for IPv6 (8 groups of 4 hexadecimal digits)
-    elif number == 16:
-        for i in range(8):
-            quartet = ""
-            for j in range(4):
-                quartet += random.choice(hex_digits)
-            address_parts.append(quartet)
-    
-    # colon-separated address
-    address = ":".join(address_parts)
-    
-    return address
+    counter=0
+    endloop=False
+    addressStore="" # adding raw hexadecimals numbers (not formatted with colon in between)
 
+    # Loops until the endloop value turn into False.
+    while(not endloop): 
+        randomHex=randint(0,15) # random number generator from 0 up to 15 since hexadecimal is up to 15
+        
+        '''
+            if statements that converts and adds the converted/unconverted number to the addressStore variable
+            it also append the characters into the addressStore variable
+        '''
+        if (randomHex==10):
+            randomHex="A"
+            addressStore+=randomHex
+            
+        elif (randomHex==11):
+            randomHex="B"
+            addressStore+=randomHex
+
+        elif (randomHex==12):
+            randomHex="C"
+            addressStore+=randomHex
+
+        elif (randomHex==13):
+            randomHex="D"
+            addressStore+=randomHex
+
+        elif (randomHex==14):
+            randomHex="E"
+            addressStore+=randomHex
+
+        elif (randomHex==15):
+            randomHex="F"
+            addressStore+=randomHex
+
+        else:
+            addressStore+=str(randomHex)
+
+        counter+=1 # Increment the value of counter variable by 1 for the if statement below
+
+        # if statement if number is either 6 or 16 if it is 6, it will generate MAC address and if it is 16, it will generate IPv6 Address.
+        if(number == 6):
+            if(counter==2):
+                addressStore+=":"
+                counter=0 # decrement the value to 0 again to reiterate the appending of columns in addressStore variable
+            
+            # Check if the characters are already exact characters (12 hex numbers and 5 colons, 1 colon each every 2 characters.)
+            if(len(addressStore)>16):
+                endloop=True
+
+        elif(number == 16):
+            if(counter==4):
+                addressStore+=":"
+                counter=0 # decrement the value to 0 again to reiterate the appending of columns in addressStore variable
+            
+            # Check if the characters are already exact characters (12 hex numbers and 5 colons, 1 colon each every 2 characters.)
+            if(len(addressStore)>39):
+                endloop=True
+
+    # output the result removing the extra colon at the end of the MAC address that has been generated randomly.
+    print(f"{addressStore.rstrip(":")}")
 
 def main():
-    # mac address generation
-    print("Generating random MAC address...", generate_hex_digits())
+    print("\nGenerating random MAC address...")
+    generate_hex_digits()
     
-    print()  # Blank line for separation
+    print("")
     
-    # Generate random IPv6 address
-    print("Generating random IPv6 address...", generate_hex_digits(16))
+    print("Generating random IPv6 address...")
+    generate_hex_digits(16)
+    
+    print("")
+
+   
 
 
 if(__name__=="__main__"):
