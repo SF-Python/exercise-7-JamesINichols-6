@@ -1,45 +1,71 @@
-# Dakoda Melendez
+# Arthur Mozzoni
 # COP2002.0M1
-# March 27, 2026
-# Exercise 7: Define Own Function and Use It
-# Revise the Exercise 5 program to use functions.  It will also allow the user to be able to generate both a mac address and an IPV6 address.
+# 4/12/2026
+# Hex digit generator
+# generate hex digits for IP addresses
+from random import randint
 
-import random
 
+def decToHexTranslator(decimalNum):
+    # Take a decimal number and translate it to hexadecimal
+    hexDigits = "0123456789ABCDEF"
+    finalHex = ""
+    
+    if decimalNum == 0:
+        return "0"
+    while decimalNum > 0:
+        remainder = decimalNum % 16
+        finalHex = hexDigits[remainder] + finalHex
+        decimalNum = decimalNum // 16
+ 
+    return finalHex
+
+
+# Below is the
+#   (1)Name         (2)parameter and (4)defualt arguement(which is 6)
 def generate_hex_digits(number=6):
-    """Generate a string of random hexadecimal digits."""
-    hex_chars = "0123456789ABCDEF"
-    hex_string = ""
+    # Create a list with number amount of hexadecimal numbers
+    finishedAddress = []
     
-    # Generate the specified number of hexadecimal characters
-    for _ in range(number):
-        hex_string += random.choice(hex_chars)
+    for i in range(0,number):
+        randomNum = randint(0,32)        #RandomNum is an argument
+        addressGroup = decToHexTranslator(randomNum)
+        
+        if randomNum < 16:
+            finishedAddress.append(f"0{addressGroup}")
+        else:
+            finishedAddress.append(f"{addressGroup}")
     
-    return ":".join([hex_string[i:i+4] for i in range(0, len(hex_string), 4)])
+        
+    return finishedAddress
+# (5)finishedAddress is a return value
+# (6)Lines 26-40 is the definition for the function generate_hex_digits
 
-
-def generate_macaddress(number=6):
-    """Generate a random MAC address using a while loop."""
-    hex_chars = "0123456789ABCDEF"
-    mac_address = []
-
-    # Generate 6 pairs of hexadecimal characters using a while loop
-    while len(mac_address)<6:
-        # Pick two random hexadecimal characters
-        char1=random.choice(hex_chars)
-        char2=random.choice(hex_chars)
-        # Combine the two characters to form a byte
-        byte = char1 + char2
-        mac_address.append(byte)
-
-    # Join each byte with a colon to form MAC address
-    return ":".join(mac_address)
 
 def main():
-    mac_address = generate_macaddress()
-    print("Generating random MAC Address...","\n",mac_address)
-    ipv6_address = generate_hex_digits(32)
-    print("Generating random IPv6 Address...","\n",ipv6_address)
+    # Run the main block of code for the file
+    listForMAC = generate_hex_digits()
+    listForIPV6 = generate_hex_digits(16) 
+    # (3&7) The 16 is an argument being passed into the function call generate_hex_digits
+    
+    print("Generating random MAC address...")
+    for i in range(len(listForMAC)):
+        if i == len(listForMAC) -1:
+            print(listForMAC[i])
+        else:
+            print(listForMAC[i],end=":")
+    
+    print("\nGenerating random IPV6 address...")
+    for i in range(0,len(listForIPV6),2):
+        pair = listForIPV6[i]+listForIPV6[i+1]
+        if i == len(listForIPV6) -2:
+            print(pair)
+        else:
+            print(pair, end=":")
+    
+    
+    
+    
 
 if __name__ == "__main__":
     main()
