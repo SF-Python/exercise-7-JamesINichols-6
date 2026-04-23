@@ -1,54 +1,50 @@
-
-# Name: Mikesael Nieves
-# Course ID and section: COP2002.0M1
-# Date Created: 04/09/2026
+# Name: Cayden Major
+# Course ID and Section:W26 COP2002.0M1
+# Date Created: April 12, 2026
 # Program Title: MAC and IPv6 Address Generator
-# Program Description: This program makes random MAC and IPv6 addresses using functions.
-
-
+# Program Description: This program generates a random MAC address and IPv6 address using a function.
 
 import random
 
-# This function makes a MAC or IPv6 address.
-# number is how many pairs or quartets to make. Default is 6 for MAC.
+# Function to generate hexadecimal address
 def generate_hex_digits(number=6):
-    hex_digits = []  # list to hold the parts
+    hex_digits = "0123456789ABCDEF"
+    result = ""
 
-    if number == 6:
-        # MAC address: 6 pairs (2 hex digits each)
-        for i in range(number):
-            a = random.randint(0, 15)
-            b = random.randint(0, 15)
-            pair = hex(a)[2:].upper() + hex(b)[2:].upper()
-            if len(pair) < 2:
-                pair = "0" + pair
-            hex_digits.append(pair)
-        address = ':'.join(hex_digits)  # join with colons
-        return address  # return value
-    elif number == 16:
-        # IPv6 address: 8 quartets (4 hex digits each)
-        for i in range(8):
-            quartet = f"{random.randint(0, 65535):04X}"
-            hex_digits.append(quartet)
-        address = ':'.join(hex_digits)
-        return address
-    else:
-        return ''
+    # Loop through number of groups
+    for i in range(number):
+        group = ""
+
+        # MAC = pairs (2 digits), IPv6 = quartets (4 digits)
+        if number == 6:
+            for j in range(2):
+                group += random.choice(hex_digits)
+        else:
+            for j in range(4):
+                group += random.choice(hex_digits)
+
+        result += group
+
+        # Add colon if not last group
+        if i < number - 1:
+            result += ":"
+
+    return result
 
 
-# This is the main function
 def main():
+    # Generate MAC Address
     print("Generating random MAC address...")
-    mac = generate_hex_digits()  # function call, uses default
-    print(mac)
+    mac_address = generate_hex_digits()
+    print(mac_address)
 
-    print()  # blank line
+    print()
 
+    # Generate IPv6 Address
     print("Generating random IPv6 address...")
-    ipv6 = generate_hex_digits(16)  # function call, uses 16
-    print(ipv6)
+    ipv6_address = generate_hex_digits(16)
+    print(ipv6_address)
 
 
-# This makes the main function run
-if __name__ == "__main__":
+if(__name__=="__main__"):
     main()
