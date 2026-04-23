@@ -61,7 +61,7 @@ def main():
 
     print()
 
-    print(f"Generation random IPv6 address...\n{Ipv6Address}")
+    print(f"Generating random IPv6 address...\n{Ipv6Address}")
 
     
 
