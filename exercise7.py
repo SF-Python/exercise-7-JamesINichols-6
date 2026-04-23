@@ -27,6 +27,7 @@ def main():
 
     print("Generating random MAC address...")
     print(f"{mac_address}")
+    print()
     print("Generating random IPv6 address...")
     print(f"{ipv6_address}")
 
