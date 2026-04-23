@@ -1,71 +1,54 @@
-# Arthur Mozzoni
-# COP2002.0M1
-# 4/12/2026
-# Hex digit generator
-# generate hex digits for IP addresses
-from random import randint
+
+# Name: Mikesael Nieves
+# Course ID and section: COP2002.0M1
+# Date Created: 04/09/2026
+# Program Title: MAC and IPv6 Address Generator
+# Program Description: This program makes random MAC and IPv6 addresses using functions.
 
 
-def decToHexTranslator(decimalNum):
-    # Take a decimal number and translate it to hexadecimal
-    hexDigits = "0123456789ABCDEF"
-    finalHex = ""
-    
-    if decimalNum == 0:
-        return "0"
-    while decimalNum > 0:
-        remainder = decimalNum % 16
-        finalHex = hexDigits[remainder] + finalHex
-        decimalNum = decimalNum // 16
- 
-    return finalHex
 
+import random
 
-# Below is the
-#   (1)Name         (2)parameter and (4)defualt arguement(which is 6)
+# This function makes a MAC or IPv6 address.
+# number is how many pairs or quartets to make. Default is 6 for MAC.
 def generate_hex_digits(number=6):
-    # Create a list with number amount of hexadecimal numbers
-    finishedAddress = []
-    
-    for i in range(0,number):
-        randomNum = randint(0,32)        #RandomNum is an argument
-        addressGroup = decToHexTranslator(randomNum)
-        
-        if randomNum < 16:
-            finishedAddress.append(f"0{addressGroup}")
-        else:
-            finishedAddress.append(f"{addressGroup}")
-    
-        
-    return finishedAddress
-# (5)finishedAddress is a return value
-# (6)Lines 26-40 is the definition for the function generate_hex_digits
+    hex_digits = []  # list to hold the parts
+
+    if number == 6:
+        # MAC address: 6 pairs (2 hex digits each)
+        for i in range(number):
+            a = random.randint(0, 15)
+            b = random.randint(0, 15)
+            pair = hex(a)[2:].upper() + hex(b)[2:].upper()
+            if len(pair) < 2:
+                pair = "0" + pair
+            hex_digits.append(pair)
+        address = ':'.join(hex_digits)  # join with colons
+        return address  # return value
+    elif number == 16:
+        # IPv6 address: 8 quartets (4 hex digits each)
+        for i in range(8):
+            quartet = f"{random.randint(0, 65535):04X}"
+            hex_digits.append(quartet)
+        address = ':'.join(hex_digits)
+        return address
+    else:
+        return ''
 
 
+# This is the main function
 def main():
-    # Run the main block of code for the file
-    listForMAC = generate_hex_digits()
-    listForIPV6 = generate_hex_digits(16) 
-    # (3&7) The 16 is an argument being passed into the function call generate_hex_digits
-    
     print("Generating random MAC address...")
-    for i in range(len(listForMAC)):
-        if i == len(listForMAC) -1:
-            print(listForMAC[i])
-        else:
-            print(listForMAC[i],end=":")
-    
-    print("\nGenerating random IPV6 address...")
-    for i in range(0,len(listForIPV6),2):
-        pair = listForIPV6[i]+listForIPV6[i+1]
-        if i == len(listForIPV6) -2:
-            print(pair)
-        else:
-            print(pair, end=":")
-    
-    
-    
-    
+    mac = generate_hex_digits()  # function call, uses default
+    print(mac)
 
+    print()  # blank line
+
+    print("Generating random IPv6 address...")
+    ipv6 = generate_hex_digits(16)  # function call, uses 16
+    print(ipv6)
+
+
+# This makes the main function run
 if __name__ == "__main__":
     main()
