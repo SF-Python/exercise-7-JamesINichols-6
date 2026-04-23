@@ -68,16 +68,16 @@ def generate_hex_digits(number=6):
                 endloop=True
 
     # output the result removing the extra colon at the end of the MAC address that has been generated randomly.
-    print(f"{addressStore.rstrip(":")}")
+    return f"{addressStore.rstrip(":")}"
 
 def main():
     print("\nGenerating random MAC address...")
-    generate_hex_digits()
+    print(generate_hex_digits())
     
     print("")
     
     print("Generating random IPv6 address...")
-    generate_hex_digits(16)
+    print(generate_hex_digits(16))
     
     print("")
 
