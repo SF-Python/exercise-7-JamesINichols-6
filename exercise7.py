@@ -1,60 +1,51 @@
-# Morgan Palmer
-# COP2002-0M1
-# 4/12/26
-# MAC and IPv6 Address Generator
-# Program generates MAC address and an IPv6 address
+# Name: Omar Salahat
+# Course ID and Section: Program Logic 2002.0m1
+# Date Created: April 12, 2026
+# Program Title: MAC and IPv6 Address Generator
+# Program Description: This program generates a random MAC address and IPv6 address using a reusable function.
 
 import random
 
-# number = 6 MAC address
-# number = 16 IPv6
-def generate_hex_digits(number = 6):
-    # valid hexadecimal digits
-    hex_digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
 
+# This function generates hexadecimal digits for MAC or IPv6 addresses
+def generate_hex_digits(number=6):
+    hex_chars = "0123456789ABCDEF"
     result = ""
-    pair_count = 0
 
-    # loop for hex pairs
-    while pair_count < number:
+    # Loop through the required number of pairs
+    for i in range(number):
+        pair = ""
 
-        digit_count = 0
-        hex_pair = ""
+        # Each pair consists of two hexadecimal digits
+        for j in range(2):
+            pair += random.choice(hex_chars)
 
+        # Add the pair to the result
+        result += pair
 
-        while digit_count < 2:
-            random_index = random.randint(0, len(hex_digits) - 1)
-            hex_pair = hex_pair + hex_digits[random_index]
-            digit_count += 1
-
-        result = result + hex_pair
-
-
-        if number == 6:
-            if pair_count < number - 1:
-                result = result + ":"
-
-
-        else:
-            if pair_count % 2 == 1 and pair_count < number - 1:
-                result = result + ":"
-
-        pair_count += 1
+        # Add colon formatting
+        if i < number - 1:
+            # MAC address: colon after every pair
+            if number == 6:
+                result += ":"
+            # IPv6 address: colon after every 2 pairs (quartet)
+            elif number == 16 and (i % 2 == 1):
+                result += ":"
 
     return result
 
-def main():
 
-    # Displays the generated MAC address
+def main():
+    # Generate and print MAC address
     print("Generating random MAC address...")
     print(generate_hex_digits())
 
     print()
-    
-    # Displays the generated IPv6 address
+
+    # Generate and print IPv6 address
     print("Generating random IPv6 address...")
     print(generate_hex_digits(16))
 
 
-if (__name__ == "__main__"):
+if(__name__ == "__main__"):
     main()
