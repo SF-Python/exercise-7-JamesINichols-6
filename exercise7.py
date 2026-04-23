@@ -1,88 +1,45 @@
-# Miguel Evangelista
-# COP2002-0M1
-# Apr 12, 2026
-# Exercise5: Loops
-# Program generates random MAC Address
+# Dakoda Melendez
+# COP2002.0M1
+# March 27, 2026
+# Exercise 7: Define Own Function and Use It
+# Revise the Exercise 5 program to use functions.  It will also allow the user to be able to generate both a mac address and an IPV6 address.
 
-from random import randint
+import random
 
 def generate_hex_digits(number=6):
-    counter=0
-    endloop=False
-    addressStore="" # adding raw hexadecimals numbers (not formatted with colon in between)
+    """Generate a string of random hexadecimal digits."""
+    hex_chars = "0123456789ABCDEF"
+    hex_string = ""
+    
+    # Generate the specified number of hexadecimal characters
+    for _ in range(number):
+        hex_string += random.choice(hex_chars)
+    
+    return ":".join([hex_string[i:i+4] for i in range(0, len(hex_string), 4)])
 
-    # Loops until the endloop value turn into False.
-    while(not endloop): 
-        randomHex=randint(0,15) # random number generator from 0 up to 15 since hexadecimal is up to 15
-        
-        '''
-            if statements that converts and adds the converted/unconverted number to the addressStore variable
-            it also append the characters into the addressStore variable
-        '''
-        if (randomHex==10):
-            randomHex="A"
-            addressStore+=randomHex
-            
-        elif (randomHex==11):
-            randomHex="B"
-            addressStore+=randomHex
 
-        elif (randomHex==12):
-            randomHex="C"
-            addressStore+=randomHex
+def generate_macaddress(number=6):
+    """Generate a random MAC address using a while loop."""
+    hex_chars = "0123456789ABCDEF"
+    mac_address = []
 
-        elif (randomHex==13):
-            randomHex="D"
-            addressStore+=randomHex
+    # Generate 6 pairs of hexadecimal characters using a while loop
+    while len(mac_address)<6:
+        # Pick two random hexadecimal characters
+        char1=random.choice(hex_chars)
+        char2=random.choice(hex_chars)
+        # Combine the two characters to form a byte
+        byte = char1 + char2
+        mac_address.append(byte)
 
-        elif (randomHex==14):
-            randomHex="E"
-            addressStore+=randomHex
-
-        elif (randomHex==15):
-            randomHex="F"
-            addressStore+=randomHex
-
-        else:
-            addressStore+=str(randomHex)
-
-        counter+=1 # Increment the value of counter variable by 1 for the if statement below
-
-        # if statement if number is either 6 or 16 if it is 6, it will generate MAC address and if it is 16, it will generate IPv6 Address.
-        if(number == 6):
-            if(counter==2):
-                addressStore+=":"
-                counter=0 # decrement the value to 0 again to reiterate the appending of columns in addressStore variable
-            
-            # Check if the characters are already exact characters (12 hex numbers and 5 colons, 1 colon each every 2 characters.)
-            if(len(addressStore)>16):
-                endloop=True
-
-        elif(number == 16):
-            if(counter==4):
-                addressStore+=":"
-                counter=0 # decrement the value to 0 again to reiterate the appending of columns in addressStore variable
-            
-            # Check if the characters are already exact characters (12 hex numbers and 5 colons, 1 colon each every 2 characters.)
-            if(len(addressStore)>39):
-                endloop=True
-
-    # output the result removing the extra colon at the end of the MAC address that has been generated randomly.
-    return f"{addressStore.rstrip(":")}"
+    # Join each byte with a colon to form MAC address
+    return ":".join(mac_address)
 
 def main():
-    print("\nGenerating random MAC address...")
-    print(generate_hex_digits())
-    
-    print("")
-    
-    print("Generating random IPv6 address...")
-    print(generate_hex_digits(16))
-    
-    print("")
+    mac_address = generate_macaddress()
+    print("Generating random MAC Address...","\n",mac_address)
+    ipv6_address = generate_hex_digits(32)
+    print("Generating random IPv6 Address...","\n",ipv6_address)
 
-   
-
-
-if(__name__=="__main__"):
+if __name__ == "__main__":
     main()
