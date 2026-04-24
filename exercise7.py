@@ -41,7 +41,7 @@ def main():
     print(mac)
     print()
 
-    print("Generation random IPv6 Address...")
+    print("Generating random IPv6 Address...")
     # Generates IPv6 address from this function call
     ipv6 = generate_hex_digits(16)
     print(ipv6)
