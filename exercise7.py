@@ -1,60 +1,60 @@
-# Allison Day
+# Grant Tidwell
 # COP2002.0M1
-# April 5, 2026
-# Exercise 7
-# This program will generate a random MAC address or IPv6 address
+# 4/12/2026
+# Exercise 7: Define Own Function and Use It
 
-def main():
-    import random
-
-    choices = [6, 16]
-    number = random.choice(choices)
+import random
 
 
 def generate_hex_digits(number=6):
-    print("Generating random MAC Address...")
+    #Generates either a MAC address (number=6) or IPv6 address (number=16)
+    hex_pairs = []
+    count = 0
     
-    # Uses random module to generate a random hex digit
-    import random
-
-    # Lists all possible hex digits that can be used
-    hex_digits = "0123456789ABCDEF"
-    mac_address = ""
+    while count < number:
+        byte_value = random.randint(0, 255)
+        hex_pair = f"{byte_value:02X}"
+        hex_pairs.append(hex_pair)
+        count += 1
     
-    # Loop for 6 pairs to complete the MAC Address
-    for int in range(6):
-        pair = random.choice(hex_digits) + random.choice(hex_digits)
-        mac_address += pair
-        if int < 5:
-
-            # Adds colon between pairs
-            mac_address += ":"
-    print(mac_address)
-    print() 
+    if number == 6:
+        # MAC Address
+        return ":".join(hex_pairs)
+    elif number == 16:
+        # IPv6 Address - group every 4 hex digits
+        ipv6_groups = []
+        for i in range(0, len(hex_pairs), 2):
+            group = hex_pairs[i] + hex_pairs[i+1]
+            ipv6_groups.append(group)
+        return ":".join(ipv6_groups)
     
-def generate_hex_digits(number=16):
-    print("Generating random IPv6 Address...")
+    else: return "Error: Invalid number"
+
+
+def main():
+    print("Random Address Generator\n")
     
-    # Uses random module to generate a random hex digit
-    import random
+    while True:
+        print("1. Generate MAC Address")
+        print("2. Generate IPv6 Address")
+        print("3. Quit")
+        
+        choice = input("\nEnter your choice (1-3): ").strip()
+        
+        if choice == "1":
+            address = generate_hex_digits(6)          # Must call with 6
+            print(f"\nGenerated MAC Address: {address}\n")
+            
+        elif choice == "2":
+            address = generate_hex_digits(16)         # Must call with 16
+            print(f"\nGenerated IPv6 Address: {address}\n")
+            
+        elif choice == "3":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.\n")
 
-    # Lists all possible hex digits that can be used
-    hex_digits = "0123456789ABCDEF"
-    ipv6_address = ""
-    
-    # Loop for 8 pairs to complete the IPv6 Address
-    for int in range(8):
-        pair = random.choice(hex_digits) + random.choice(hex_digits)
-        ipv6_address += pair
-        if int < 7:
 
-            # Adds colon between pairs
-            ipv6_address += ":"
-    print(ipv6_address)
-    print()
-
-if (main() == generate_hex_digits(number=6)):
-    main()
-
-elif (main() == generate_hex_digits(number=16)):
+if __name__ == "__main__":
     main()
